@@ -1,0 +1,29 @@
+{
+  "name": "matt",
+  "version": "0.0.3",
+  "description": "JavaScript DSL for Matrices",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "6to5 src --out-dir lib",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrejewski/matt.git"
+  },
+  "keywords": [
+    "matrix",
+    "matrices",
+    "vector"
+  ],
+  "author": "Chris Andrejewski <christopher.andrejewski@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrejewski/matt/issues"
+  },
+  "homepage": "https://github.com/andrejewski/matt",
+  "devDependencies": {
+    "6to5": "^1.15.0",
+    "mocha": "^2.0.1"
+  }
+}
