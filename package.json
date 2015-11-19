@@ -1,6 +1,6 @@
 {
   "name": "matt",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JavaScript DSL for Matrices",
   "main": "lib/index.js",
   "scripts": {
