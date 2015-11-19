@@ -16,7 +16,7 @@ describe('Matrix', function() {
 				[1,2,3]
 			]);
 			assert(this.m1.equals(m3));
-			
+
 			var m4 = new Matrix([
 				[1,2],
 				[3,4]
@@ -46,7 +46,7 @@ describe('Matrix', function() {
 			assert.equal(this.m2.elements.length, 4);
 
 			assert.deepEqual(
-				[1,2,3,1,2,3,1,2,3], 
+				[1,2,3,1,2,3,1,2,3],
 				this.m1.elements
 			);
 
@@ -92,9 +92,31 @@ describe('Matrix', function() {
 			assert.deepEqual([1,2,3], this.m1.getRow(0));
 			assert.deepEqual([1,2,3], this.m1.getRow(1));
 			assert.deepEqual([1,2,3], this.m1.getRow(2));
-			
+
 			assert.deepEqual([1,2], this.m2.getRow(0));
 			assert.deepEqual([3,4], this.m2.getRow(1));
+		});
+	});
+
+	describe('setRow(row Number, elements [Any]) [Matrix]', function() {
+		it('should return a new matrix with updated row', function() {
+			var m3 = this.m1.setRow(0, [4,5,6]);
+			assert.deepEqual([1,2,3], this.m1.getRow(0));
+			assert.deepEqual([4,5,6], m3.getRow(0));
+		});
+		it('should throw if not enough elements are provided', function() {
+			var m1 = this.m1;
+
+			assert.throws(function() {
+				m1.setRow(0, [4, 5]);
+			})
+		});
+		it('should throw if more elements are provided', function() {
+			var m1 = this.m1;
+
+			assert.throws(function() {
+				m1.setRow(0, [4, 5, 6, 7]);
+			})
 		});
 	});
 
@@ -103,9 +125,32 @@ describe('Matrix', function() {
 			assert.deepEqual([1,1,1], this.m1.getColumn(0));
 			assert.deepEqual([2,2,2], this.m1.getColumn(1));
 			assert.deepEqual([3,3,3], this.m1.getColumn(2));
-			
+
 			assert.deepEqual([1,3], this.m2.getColumn(0));
 			assert.deepEqual([2,4], this.m2.getColumn(1));
+		});
+	});
+
+	describe('setColumn(col Number, elements [Any]) [Matrix]', function() {
+		it('should return a new matrix with updated column', function() {
+			var m3 = this.m1.setColumn(0, [4,5,6]);
+			assert.deepEqual([1,1,1], this.m1.getColumn(0));
+			assert.deepEqual([4,5,6], m3.getColumn(0));
+		});
+
+		it('should throw if not enough elements are provided', function() {
+			var m1 = this.m1;
+
+			assert.throws(function() {
+				m1.setColumn(0, [4, 5]);
+			})
+		});
+		it('should throw if more elements are provided', function() {
+			var m1 = this.m1;
+
+			assert.throws(function() {
+				m1.setColumn(0, [4, 5, 6, 7]);
+			})
 		});
 	});
 
@@ -318,11 +363,11 @@ describe('Matrix', function() {
 		it('should return this matrix joined vertically by the given matrix', function() {
 			var m3 = this.m1.joinVertical(this.m1);
 			var m4 = new Matrix(6, 3, [
-				1, 2, 3, 
 				1, 2, 3,
-				1, 2, 3, 
 				1, 2, 3,
-				1, 2, 3, 
+				1, 2, 3,
+				1, 2, 3,
+				1, 2, 3,
 				1, 2, 3
 			]);
 			assert(m3.equals(m4));
@@ -330,7 +375,7 @@ describe('Matrix', function() {
 			var m5 = this.m2.joinVertical(this.m2);
 			var m6 = new Matrix(4, 2, [
 				1, 2,
-				3, 4, 
+				3, 4,
 				1, 2,
 				3, 4
 			]);
@@ -368,7 +413,7 @@ describe('Matrix', function() {
 			var m4 = this.m2.scale(2);
 
 			assert(m3 instanceof Matrix);
-			assert(m3.equals(m4));			
+			assert(m3.equals(m4));
 		});
 	});
 
@@ -380,12 +425,12 @@ describe('Matrix', function() {
 			var m4 = this.m2.scale(2);
 
 			assert(m3 instanceof Matrix);
-			assert(m3.equals(m4));			
+			assert(m3.equals(m4));
 		});
 		it('should map all (even undefined) indexes', function() {
 			function f0() {return 0;}
 			var z1 = this.m1.fmap(f0);
-			
+
 			var m3 = new Matrix(3, 3, []);
 			var z3 = m3.fmap(f0);
 
@@ -462,7 +507,7 @@ describe('Matrix', function() {
 
 			// (A`)` = A
 			assert(A.transpose().transpose().equals(A));
-			
+
 			// (A+B)` = A` + B`
 			assert(
 				A.add(B).transpose().equals(
@@ -499,7 +544,7 @@ describe('Matrix', function() {
 			var m4 = new Matrix(3,4, [
 				1, 2, 3, 4,
 				5, 6, 7, 8,
-				9,10,11,12 
+				9,10,11,12
 			]);
 
 			assert.throws(function() {
@@ -541,14 +586,14 @@ describe('Matrix', function() {
 				2, 3,
 				2, 3
 			])));
-			
+
 			// top-right
 			var min3 = m1.minor(0,2);
 			assert(min3.equals(new Matrix(2,2, [
 				1, 2,
 				1, 2,
 			])));
-			
+
 			// bottom-right
 			var min4 = m1.minor(2,2);
 			assert(min4.equals(new Matrix(2,2, [
@@ -597,14 +642,14 @@ describe('Matrix', function() {
 	describe('invert() Matrix', function() {
 		it('should return the inversion of the matrix', function() {
 			// 1x1
-			assert(new Matrix(1,1,[1]).equals( 
+			assert(new Matrix(1,1,[1]).equals(
 				new Matrix(1,1,[1]).invert()
 			));
 			assert(new Matrix(1,1,[0.5]).equals(
 				new Matrix(1,1,[2]).invert()
 			));
 			// 2x2
-			assert(new Matrix(2,2,[-2, 1, 3/2, (-1/2)]).equals( 
+			assert(new Matrix(2,2,[-2, 1, 3/2, (-1/2)]).equals(
 				this.m2.invert()
 			));
 			// 3x3
@@ -632,7 +677,7 @@ describe('Matrix', function() {
 				-29/40, 17/20, 	-1/5, 	-1/40,
 				47/40, 	-21/20, 1/10, 	3/40
 			]);
-			assert(n4.invert().equals(n4i));			
+			assert(n4.invert().equals(n4i));
 		});
 		it('should throw if the matrix is not square', function() {
 			var m1 = this.m1;
@@ -641,7 +686,7 @@ describe('Matrix', function() {
 			var m4 = new Matrix(3,4, [
 				1, 2, 3, 4,
 				5, 6, 7, 8,
-				9,10,11,12 
+				9,10,11,12
 			]);
 
 			assert.throws(function() {
@@ -688,11 +733,11 @@ describe('Matrix', function() {
 			assert.equal(7410, n5.determinant());
 
 			var n6 = new Matrix(6,6,[
-				1, 2, 3, 6, 5, 4, 
-				1, 2, 3, 6, 5, 4, 
-				1, 2, 3, 6, 5, 4, 
-				1, 2, 3, 6, 5, 4, 
-				1, 2, 3, 6, 5, 4, 
+				1, 2, 3, 6, 5, 4,
+				1, 2, 3, 6, 5, 4,
+				1, 2, 3, 6, 5, 4,
+				1, 2, 3, 6, 5, 4,
+				1, 2, 3, 6, 5, 4,
 				1, 2, 3, 6, 5, 4
 			]);
 			assert.equal(0, n6.determinant());
@@ -708,7 +753,6 @@ describe('Matrix', function() {
 				1, 2, 3, 6, 5, 4, 8, 7
 			]);
 			assert.equal(0, n8.determinant());
-			
 		});
 		it('should throw if the matrix is not square', function() {
 			var m1 = this.m1;
@@ -717,7 +761,7 @@ describe('Matrix', function() {
 			var m4 = new Matrix(3,4, [
 				1, 2, 3, 4,
 				5, 6, 7, 8,
-				9,10,11,12 
+				9,10,11,12
 			]);
 
 			assert.doesNotThrow(function() {

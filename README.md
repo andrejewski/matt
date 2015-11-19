@@ -39,7 +39,7 @@ Also see **[Seth](https://github.com/andrejewski/seth)**, my other mathematical 
 
 ## Features
 
-Matt exposes one core `Matrix` ES6 written and ready class with tons of matrix methods. Methods include `get`, `set`, `getRow`, `getColumn`, `getDiagonal`, `getRightDiagonal`, `trace`, `rightTrace`, `add`, `subtract`, `multiply`, `joinHorizontal`, `joinVertical`, `clone`, `map`, `fmap`, `forEach`, `reduce`, `scale`, `transpose`, `identity`, `submatrix`, `minor`, `cofactor`, `cofactorMatrix`, `invert`, `determinant`, `isSquare`, `equals`, `toArray`, `toTable`, and `toString`.
+Matt exposes one core `Matrix` ES6 written and ready class with tons of matrix methods. Methods include `get`, `set`, `getRow`, `setRow`, `getColumn`, `setColumn`, `getDiagonal`, `getRightDiagonal`, `trace`, `rightTrace`, `add`, `subtract`, `multiply`, `joinHorizontal`, `joinVertical`, `clone`, `map`, `fmap`, `forEach`, `reduce`, `scale`, `transpose`, `identity`, `submatrix`, `minor`, `cofactor`, `cofactorMatrix`, `invert`, `determinant`, `isSquare`, `equals`, `toArray`, `toTable`, and `toString`.
 
 All methods are tested and throw appropriate errors when the operation is impossible. For example, `determinant` will throw when called on a non-square matrix.
 
@@ -54,7 +54,9 @@ constructor(rows Number, cols Number, elements [Any]) Matrix
 get(row Number, col Number) Any
 set(row Number, col Number, value Any) Matrix
 getRow(row Number) [Any]
+setRow(row Number, elements [Any]) Matrix
 getColumn(col Number) [Any]
+setColumn(col Number, elements [Any]) Matrix
 getDiagonal(<offset Number = 0>) [Any]
 getRightDiagonal(<offset Number = 0>) [Any]
 trace() Number

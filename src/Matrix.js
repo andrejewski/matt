@@ -41,12 +41,30 @@ export default class Matrix {
 		return this.elements.slice(lead, lead + this.cols);
 	}
 
+	setRow(row, elements) {
+		if (!elements || elements.length !== this.rows) {
+			throw new Error(`Length of provided elements should be ${this.rows}`);
+		}
+		return this.map((x, r, c) => {
+			return (r === row) ? elements[c] : x;
+		});
+	}
+
 	getColumn(col) {
 		var elems = new Array(this.rows);
 		for(var i = this.rows - 1; i >= 0; i--) {
 			elems[i] = this.get(i, col);
 		}
 		return elems;
+	}
+
+	setColumn(col, elements) {
+		if (!elements || elements.length !== this.cols) {
+			throw new Error(`Length of provided elements should be ${this.cols}`);
+		}
+		return this.map((x, r, c) => {
+			return (c === col) ? elements[r] : x;
+		});
 	}
 
 	getDiagonal(offset = 0) {
@@ -149,7 +167,7 @@ export default class Matrix {
 
 	map(fn) {
 		var elems = this.elements.map(function(x, i) {
-			var [r,c] = this._reverseIndex(i); 
+			var [r,c] = this._reverseIndex(i);
 			return fn(x, r, c, this);
 		}, this);
 		return new Matrix(this.rows, this.cols, elems);
@@ -162,7 +180,7 @@ export default class Matrix {
 		*/
 		var elems = new Array(this.size);
 		for(var i = this.size - 1; i >= 0; i--) {
-			var [r,c] = this._reverseIndex(i); 
+			var [r,c] = this._reverseIndex(i);
 			elems[i] = fn(this.elements[i], r, c, this);
 		}
 		return new Matrix(this.rows, this.cols, elems);
@@ -170,7 +188,7 @@ export default class Matrix {
 
 	forEach(fn) {
 		var elems = this.elements.forEach(function(x, i) {
-			var [r,c] = this._reverseIndex(i); 
+			var [r,c] = this._reverseIndex(i);
 			fn(x, r, c, this);
 		}, this);
 	}
@@ -188,7 +206,7 @@ export default class Matrix {
 	scale(scalar) {
 		return new Matrix(
 			this.rows,
-			this.cols, 
+			this.cols,
 			this.elements.map(x => x * scalar)
 		);
 	}
@@ -209,12 +227,12 @@ export default class Matrix {
 	}
 
 	submatrix(tlr, tlc, brr, brc) {
-		var rows = brr - tlr; 
+		var rows = brr - tlr;
 		var cols = brc - tlc;
 		var elems = [];
 		this.forEach(function(val, row, col) {
 			if(
-				(tlr <= row && row < brr) || 
+				(tlr <= row && row < brr) ||
 				(tlc <= col && col < brc)
 			) {
 				elems.push(val);
@@ -270,7 +288,7 @@ export default class Matrix {
 			this.size === matrix.size &&
 			this.rows === matrix.rows &&
 			this.cols === matrix.cols &&
-			matrix.elements && 
+			matrix.elements &&
 			this.elements.valueOf === matrix.elements.valueOf
 		);
 	}
@@ -297,7 +315,7 @@ export default class Matrix {
 		var maxl = nums.reduce(
 			((s,c) => s > c.length ? s : c.length), []);
 
-		nums = nums.map(n => 
+		nums = nums.map(n =>
 			(new Array(maxl - n.length).join(" "))+(n || '-')+" "
 		);
 
