@@ -1,10 +1,11 @@
 {
   "name": "matt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JavaScript DSL for Matrices",
   "main": "lib/index.js",
   "scripts": {
-    "build": "6to5 src --out-dir lib",
+    "prepublish": "./node_modules/babel-cli/bin/babel.js src --out-dir lib",
+    "build": "npm run prepublish",
     "test": "mocha"
   },
   "repository": {
@@ -23,7 +24,7 @@
   },
   "homepage": "https://github.com/andrejewski/matt",
   "devDependencies": {
-    "6to5": "^1.15.0",
+    "babel-cli": "^6.2.0",
     "mocha": "^2.0.1"
   }
 }
